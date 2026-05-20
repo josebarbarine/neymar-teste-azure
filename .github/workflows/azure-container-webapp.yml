@@ -2,8 +2,8 @@ name: Build and deploy a container to an Azure Web App
 
 env:
   AZURE_WEBAPP_NAME: 'appneymar'       
-  ACR_NAME: 'conteiney'                
-  IMAGE_NAME: 'conteiney.azurecr.io/minha-app' 
+  ACR_NAME: 'conteiney-facwhxb2fmfre6hc' # Altere aqui (repare que tiramos o .azurecr.io do final)
+  IMAGE_NAME: 'conteiney-facwhxb2fmfre6hc.azurecr.io/minha-app' # Altere aqui também com o  
 
 on:
   push:
