@@ -1,11 +1,15 @@
+import os
 import psycopg
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional
 from aluno_dao import AlunoDAO
 
-
-dados_conexao = "host=127.0.0.1 port=5432 dbname=postgres user=postgres password=1910"
+# Puxa a conexão do Azure. Se não existir, usa a local para os seus testes.
+dados_conexao = os.environ.get(
+    "DATABASE_URL", 
+    "host=127.0.0.1 port=5432 dbname=postgres user=postgres password=1910"
+)
 
 app = FastAPI()
 dao = AlunoDAO(dados_conexao)
