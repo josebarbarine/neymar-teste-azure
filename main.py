@@ -5,18 +5,22 @@ from pydantic import BaseModel
 from typing import Optional
 from aluno_dao import AlunoDAO
 
-# Puxa a conexão do Azure. Se não existir, usa a local para os seus testes.
+# Procura a variável de ambiente do Azure. Se não existir, usa o fallback local para testes.
 dados_conexao = os.environ.get(
     "DATABASE_URL", 
     "host=127.0.0.1 port=5432 dbname=postgres user=postgres password=1910"
 )
 
+# Inicialização crucial do FastAPI que o Uvicorn precisa encontrar (main:app)
 app = FastAPI()
-dao = AlunoDAO(dados_conexao)
-print("dao aluno carregado")
 
+# Inicializa o DAO com a string de conexão configurada
+dao = AlunoDAO(dados_conexao)
+print("DAO Aluno carregado com sucesso!")
+
+# Modelo Pydantic para validação dos dados
 class Aluno(BaseModel):
-    id: int
+    id: Optional[int] = None  # Tornamos opcional pois o banco gera automaticamente (SERIAL)
     nome: str
     email: str
 
@@ -28,8 +32,11 @@ def criar_aluno(aluno: Aluno):
 @app.get("/alunos")
 def listar_alunos():
     resultados = dao.listar_todos()
+    if not resultados:
+        return {"message": "Nenhum aluno encontrado."}
+        
     mensagem = ""
     for aluno in resultados:
-        mensagem = mensagem + f"aluno {aluno.nome}"
+        mensagem = mensagem + f"aluno {aluno.nome}; "
 
-    return {"message": mensagem}
+    return {"message": mensagem.strip()}
