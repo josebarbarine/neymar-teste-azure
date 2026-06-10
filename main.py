@@ -5,7 +5,6 @@ e configura os metadados do Swagger UI.
 """
 
 from fastapi import FastAPI
-
 from app.database import Base, engine
 from app.routers import autores, livros
 
@@ -21,7 +20,7 @@ app = FastAPI(
     ),
     version="1.0.0",
     contact={
-        "name": "Trabalho Prático — FastAPI + PostgreSQL",
+        "name": "Trabalho Prático — FastAPI + PostgreSQL + Azure",
     },
     license_info={
         "name": "MIT",
