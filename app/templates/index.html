@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}TaskManager Azure — Início{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+  <h1 class="display-5 fw-bold" style="color:#0078d4">
+    <i class="fab fa-microsoft me-3"></i>TaskManager Azure
+  </h1>
+  <p class="lead text-muted mt-2">
+    Aplicação Python + Flask com deploy containerizado no Microsoft Azure
+  </p>
+
+  {% if not current_user.is_authenticated %}
+  <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg mt-3 px-5 shadow">
+    <i class="fab fa-github me-2"></i>Entrar com GitHub
+  </a>
+  {% else %}
+  <a href="{{ url_for('tasks.index') }}" class="btn btn-primary btn-lg mt-3 px-5 shadow">
+    <i class="fas fa-list-check me-2"></i>Ver Minhas Tarefas
+  </a>
+  {% endif %}
+</div>
+
+<div class="row g-4 mt-2">
+  <div class="col-md-3">
+    <div class="card p-4 h-100 text-center">
+      <i class="fas fa-code fa-2x text-primary mb-3"></i>
+      <h6 class="fw-bold">Python + Flask</h6>
+      <small class="text-muted">Framework leve, CRUD completo e autenticação OAuth GitHub</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-4 h-100 text-center">
+      <i class="fab fa-docker fa-2x text-info mb-3"></i>
+      <h6 class="fw-bold">Containerizado</h6>
+      <small class="text-muted">Imagem Docker publicada no Azure Container Registry (conteiney)</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-4 h-100 text-center">
+      <i class="fas fa-infinity fa-2x text-success mb-3"></i>
+      <h6 class="fw-bold">CI/CD Automático</h6>
+      <small class="text-muted">GitHub Actions: build → ACR → deploy no Web App (appneymar)</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-4 h-100 text-center">
+      <i class="fas fa-database fa-2x text-warning mb-3"></i>
+      <h6 class="fw-bold">PostgreSQL Azure</h6>
+      <small class="text-muted">Banco gerenciado no Azure Flexible Server (opet1910)</small>
+    </div>
+  </div>
+</div>
+{% endblock %}
