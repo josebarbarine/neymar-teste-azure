@@ -1,21 +1,17 @@
 """
-Configuração da conexão com o banco de dados PostgreSQL via SQLAlchemy.
+Configuração do banco de dados com SQLAlchemy.
+Lê a DATABASE_URL da variável de ambiente (local via .env ou Azure App Settings).
 """
-
 import os
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://postgres:postgres@localhost:5432/bookstore_db"
-)
+DATABASE_URL = os.environ["DATABASE_URL"]
 
 engine = create_engine(DATABASE_URL)
-
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -24,10 +20,6 @@ class Base(DeclarativeBase):
 
 
 def get_db():
-    """
-    Dependency que fornece uma sessão de banco de dados por requisição.
-    Garante que a sessão seja fechada ao final de cada request.
-    """
     db = SessionLocal()
     try:
         yield db
